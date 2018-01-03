@@ -6,6 +6,7 @@ export default class Field extends React.Component {
         this.handleStateChange = this.handleStateChange.bind(this);
         this.handleValueChange = this.handleValueChange.bind(this);
         this.handleStatusChange = this.handleStatusChange.bind(this);
+        this.isMounted = false;
     }
     componentDidMount() {
         const { control } = this.props;
@@ -13,6 +14,8 @@ export default class Field extends React.Component {
         if (control) {
             this.addListener(control);
         }
+
+        this.isMounted = true;
     }
     addListener(control) {
         if(control) {
@@ -29,11 +32,9 @@ export default class Field extends React.Component {
         }
     }
     handleStateChange(state) {
-        const { onStateChange } = this.props;
-        if(onStateChange) {
-            onStateChange(state);
+        if(this.isMounted) {
+            this.forceUpdate();
         }
-        this.forceUpdate();
     }
     handleValueChange(values) {
         const { onValueChange } = this.props;
@@ -50,6 +51,7 @@ export default class Field extends React.Component {
     componentWillUnmount() {
         // Remove Listener
         this.removeListener();
+        this.isMounted = false;
     }
     shouldComponentUpdate() {
         return false;
