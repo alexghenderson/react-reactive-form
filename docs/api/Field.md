@@ -18,12 +18,6 @@ A callback which returns a react component which needs to be re-render whenever 
 
 ##
 ```ts
-onStateChange: (fn:Function) => void;
-```
-A callback which fires when the control state changes.
-
-##
-```ts
 onValueChange: (fn:Function) => void;
 ```
 A callback which fires when the control values changes.
