@@ -1,29 +1,50 @@
 import React from 'react';
 
 export default class Field extends React.Component {
+    constructor() {
+        super();
+        this.handleStateChange = this.handleStateChange.bind(this);
+        this.handleValueChange = this.handleValueChange.bind(this);
+        this.handleStatusChange = this.handleStatusChange.bind(this);
+    }
     componentDidMount() {
         const { control } = this.props;
         // Add listener
         if (control) {
-            control.stateChanges.subscribe(() => {
-               this.forceUpdate();
-            });
+            this.addListener(control);
         }
     }
     addListener(control) {
         if(control) {
-            control.stateChanges.subscribe(() => {
-                this.forceUpdate();
-            });
+            control.stateChanges.subscribe(this.handleStateChange);
+            control.valueChanges.subscribe(this.handleValueChange);
+            control.statusChanges.subscribe(this.handleStatusChange);
         }
     }
     removeListener(control) {
         if(control) {
-            if (control.stateChanges.observers) {
-                control.stateChanges.observers.forEach((observer) => {
-                  control.stateChanges.unsubscribe(observer);
-                });
-            }
+            control.stateChanges.unsubscribe(this.handleStateChange);
+            control.valueChanges.unsubscribe(this.handleValueChange);
+            control.statusChanges.unsubscribe(this.handleStatusChange);
+        }
+    }
+    handleStateChange(state) {
+        const { onStateChange } = this.props;
+        if(onStateChange) {
+            onStateChange(state);
+        }
+        this.forceUpdate();
+    }
+    handleValueChange(values) {
+        const { onValueChange } = this.props;
+        if(onValueChange) {
+            onValueChange(values);
+        }
+    }
+    handleStatusChange(status) {
+        const { onStatusChange } = this.props;
+        if(onStatusChange) {
+            onStatusChange(status);
         }
     }
     componentWillUnmount() {
