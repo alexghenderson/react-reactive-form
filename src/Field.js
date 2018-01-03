@@ -1,6 +1,12 @@
 import React from 'react';
 
 export default class Field extends React.Component {
+    get isMounted() {
+        return this._isMounted;
+    }
+    set isMounted(mounted) {
+        this._isMounted = mounted;
+    }
     constructor() {
         super();
         this.handleStateChange = this.handleStateChange.bind(this);
@@ -15,7 +21,7 @@ export default class Field extends React.Component {
             this.addListener(control);
         }
 
-        this.isMounted = true;
+        this._isMounted = true;
     }
     addListener(control) {
         if(control) {
@@ -51,7 +57,7 @@ export default class Field extends React.Component {
     componentWillUnmount() {
         // Remove Listener
         this.removeListener();
-        this.isMounted = false;
+        this.isMounted = _false;
     }
     shouldComponentUpdate() {
         return false;
