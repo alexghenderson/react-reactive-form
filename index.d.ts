@@ -292,7 +292,6 @@ declare abstract class AbstractControl {
 export interface FieldProps {
     render: (control: FormArray|FormControl|FormGroup) => React.ReactElement<any>|React.ReactElement<any>[];
     control: AbstractControl;
-    onStateChange: (fn:Function) => void;
     onValueChange: (fn:Function) => void;
     onStatusChange: (fn:Function) => void;
 }
